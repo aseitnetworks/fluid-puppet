@@ -2,7 +2,7 @@ class role::example {
   $nodeType = 'switchmaster'         
     file { '/tmp/k3s-installer.sh':
         ensure   => present,
-        source   => 'https://get.k3s.io/',
+        source   => 'puppet:///site-modules/role/scripts/k3s.sh',
         mode     => '0755',
         owner    => 'root',
         group    => 'root',
