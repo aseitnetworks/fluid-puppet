@@ -1,11 +1,28 @@
 class role::example {     
-  $nodeType = 'switchmaster'         
+  $nodeType = 'switchmaster'   
+      file { '/etc/sysctl.d/90-kubelet.conf':
+        ensure   => present,
+        source   => 'puppet:///modules/role/90-kubelet.conf',
+        mode     => '0644',
+        owner    => 'root',
+        group    => 'root',
+    }
+    ->
+    file { '/var/log/k3saudit':
+        ensure => 'directory',
+    }
+    ->
     file { '/tmp/k3s-installer.sh':
         ensure   => present,
         source   => 'puppet:///modules/role/k3s.sh',
         mode     => '0755',
         owner    => 'root',
         group    => 'root',
+    }
+    ->
+    exec { 'Set kernel params':
+        command  => 'sysctl -p /etc/sysctl.d/90-kubelet.conf',
+        user     => 'root',
     }
     ->
     exec { 'Install k3s':
