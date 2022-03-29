@@ -1,6 +1,6 @@
 class role::example {     
   $nodeType = 'switchmaster'   
-      file { '/etc/sysctl.d/90-kubelet.conf':
+    file { '/etc/sysctl.d/90-kubelet.conf':
         ensure   => present,
         source   => 'puppet:///modules/role/90-kubelet.conf',
         mode     => '0644',
