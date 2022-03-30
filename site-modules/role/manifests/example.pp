@@ -8,10 +8,11 @@ class role::example {
         group    => 'root',
     }
     ->
-    file { '/var/log/k3saudit':
-        ensure => 'directory',
+    exec { 'Set kernel params':
+        command  => 'sysctl -p /etc/sysctl.d/90-kubelet.conf',
+        user     => 'root',
     }
-    ->
+
     file { '/tmp/k3s-installer.sh':
         ensure   => present,
         source   => 'puppet:///modules/role/k3s.sh',
@@ -20,9 +21,8 @@ class role::example {
         group    => 'root',
     }
     ->
-    exec { 'Set kernel params':
-        command  => 'sysctl -p /etc/sysctl.d/90-kubelet.conf',
-        user     => 'root',
+    file { '/var/log/k3saudit':
+        ensure => 'directory',
     }
     ->
     exec { 'Install k3s':
@@ -30,4 +30,5 @@ class role::example {
         user     => 'root',
         environment => ['INSTALL_K3S_CHANNEL=stable'],
     }
+
 }
