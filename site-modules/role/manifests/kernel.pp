@@ -7,7 +7,7 @@ class role::kernel {
     group    => 'root',
   }
   -> exec { 'Set kernel params':
-    command  => 'sysctl -p /etc/sysctl.d/90-kubelet.conf',
+    command  => '/usr/sbin/sysctl -p /etc/sysctl.d/90-kubelet.conf',
     user     => 'root',
   }
 }
