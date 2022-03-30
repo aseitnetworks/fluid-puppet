@@ -10,7 +10,6 @@ class role::example {
     -> exec { 'Set kernel params':
         command  => 'sysctl -p /etc/sysctl.d/90-kubelet.conf',
         user     => 'root',
-        before => File['/etc/httpd.conf'],
     }
     -> file { '/tmp/k3s-installer.sh':
         ensure   => present,
