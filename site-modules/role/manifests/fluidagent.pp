@@ -7,9 +7,11 @@ class role::fluidagent {
     mode     => '0644',
     owner    => 'root',
     group    => 'root',
+    unless  => "test -e /usr/bin/fluid-agent",
   }
   -> exec { 'Install agent':
     command  => 'sh -c "apt-get update && apt-get install -y fluid-agent"',
     user     => 'root',
+    unless  => "test -e /usr/bin/fluid-agent",
   }
 }
