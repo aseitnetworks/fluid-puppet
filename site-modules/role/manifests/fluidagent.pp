@@ -11,6 +11,6 @@ class role::fluidagent {
   -> exec { 'Install agent':
     command  => 'sh -c "apt-get update && apt-get install -y fluid-agent"',
     user     => 'root',
-    unless  => "test -e /usr/bin/fluid-agent",
+    unless  => "/usr/bin/test -e /usr/bin/fluid-agent",
   }
 }
