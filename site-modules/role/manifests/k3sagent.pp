@@ -12,7 +12,7 @@ class role::k3sagent {
     ensure => directory,
   }
   -> exec { 'Install k3s':
-    command  => 'sh -c "K3S_TOKEN=`cat /etc/fluid/cluster-token`; K3S_URL=`cat /etc/fluid/server-ip`; /tmp/k3s-installer.sh"',
+    command  => '/usr/bin/sh -c "K3S_TOKEN=`cat /etc/fluid/cluster-token`; K3S_URL=`cat /etc/fluid/server-ip`; /tmp/k3s-installer.sh"',
     user     => 'root',
     environment => ['INSTALL_K3S_CHANNEL=stable'],
     unless  => "/usr/bin/test -e /usr/local/bin/k3s",
