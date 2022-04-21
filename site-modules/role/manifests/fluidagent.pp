@@ -1,9 +1,7 @@
-class role::fluidagent {     
-  $releaseType = 'stable'
-  
-  file { '/etc/apt/sources.list.d/internal.list':
+class role::fluidagent { 
+  file { '/etc/apt/sources.list.d/fluid.list':
     ensure   => file,
-    content  => 'deb https://apt.fluid.aseit.com.au/ ${releaseType} main',
+    content  => 'deb https://apt.fluid.aseit.com.au/ unstable main',
     mode     => '0644',
     owner    => 'root',
     group    => 'root',
