@@ -6,6 +6,13 @@ class role::fluidagent {
     owner    => 'root',
     group    => 'root',
   }
+  file { '/etc/fluid/agent.yaml':
+    ensure   => file,
+    source   => 'puppet:///modules/role/agent.yaml',
+    mode     => '0644',
+    owner    => 'root',
+    group    => 'root',
+  }
   -> exec { 'Install fluid gpt key':
     command  => '/usr/bin/sh -c "wget -qO - https://apt.fluid.aseit.com.au/public.key | apt-key add -"',
     user     => 'root',
