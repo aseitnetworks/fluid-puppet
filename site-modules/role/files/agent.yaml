@@ -17,4 +17,4 @@ agent:
     config: "/etc/frr"
     loopback: "auto"
     loopbackRange: "100.68.0.0"
-    interfaces: ["eth2"]
+    interfaces: ["primary"]
