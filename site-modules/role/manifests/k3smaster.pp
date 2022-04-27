@@ -28,4 +28,21 @@ class role::k3smaster {
     environment => ['INSTALL_K3S_CHANNEL=stable'],
     unless  => "/usr/bin/test -e /usr/local/bin/k3s",
   }
+
+  exec { 'Install mdns publisher':
+    command  => '/usr/bin/sh -c "DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confold\" avahi-daemon avahi-utils"',
+    user     => 'root',
+    # unless  => "/usr/bin/test -e /usr/bin/avahi-publish",
+  }
+  -> file { '/etc/avahi/services/etcd.service':
+    ensure   => file,
+    source   => 'puppet:///modules/role/etcd.service',
+    mode     => '0644',
+    owner    => 'root',
+    group    => 'root',
+  }
+  -> exec { 'Reload avahi':
+    command  => '/usr/sbin/avahi-daemon --reload',
+    user     => 'root',
+  }
 }
