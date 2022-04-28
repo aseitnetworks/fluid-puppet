@@ -1,11 +1,5 @@
 class role::k3smaster {
 
-  exec { 'Install mdns utils':
-    command  => '/usr/bin/sh -c "DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confold\" avahi-daemon avahi-utils"',
-    user     => 'root',
-    unless  => "/usr/bin/test -e /usr/bin/avahi-publish",
-  }
-  
   file { '/usr/local/bin/agent-lo-waiter.sh':
     ensure   => file,
     source   => 'puppet:///modules/role/agent-lo-waiter.sh',
@@ -29,6 +23,11 @@ class role::k3smaster {
   }
   -> file { '/var/log/k3saudit':
     ensure => directory,
+  }
+  -> exec { 'Install mdns utils':
+    command  => '/usr/bin/sh -c "DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confold\" avahi-daemon avahi-utils"',
+    user     => 'root',
+    unless  => "/usr/bin/test -e /usr/bin/avahi-publish",
   }
   -> exec { 'Wait for loopback address':
     command  => '/usr/local/bin/agent-lo-waiter.sh',
